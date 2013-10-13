@@ -23,8 +23,9 @@ $(function () {
         defaultLayout: "navbar",
         navigation: [
             {
-
+                title:"Selected",
                 action: "#home",
+                icon:"home"
             },
           {
               title: "Gallery",
