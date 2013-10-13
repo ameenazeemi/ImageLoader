@@ -9,6 +9,15 @@ function onDeviceReady() {
 
     cameraApp.run();
 
+    ////applying CSS layout
+
+    //$("#demo1").als({
+    //    visible_items: 3,
+    //    scrolling_items: 2,
+    //    orientation: "horizontal",
+    //    circular: "no",
+    //    autoscroll: "no"
+    //});
 
 
 
@@ -53,9 +62,50 @@ $(function () {
 MyApp.home = function ()
 {
     debugger;
+    var selectedIndex = ko.observable(0);
     var viewModel = {
+        viewShown: function () {
+            try {
+
+                selectedIndex = cameraApp.imagesArray().length;
+             /*
+                if (cameraApp.imagesArray().length == 0) {
+                    selectedIndex = 0;
+                }
+                else {
+                    selectedIndex = cameraApp.imagesArray().length ;
+                }
+                
+                alert(selectedIndex);
+               
+               */
+                
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+             
+            }
+        },
         
         galleryData: cameraApp.imagesArray,
+        imageIndex: selectedIndex,
+        detailImage: MyApp.settings.detailImage,
+        listImage:!MyApp.settings.detailImage,
+       
+        
+        clickAction: function (data,event)
+        {
+            debugger;
+
+            alert("click action of image");
+
+            alert(data);
+
+        }
+        
+
     };
     return viewModel;
 }
@@ -119,8 +169,9 @@ MyApp.video = function () {
 };
 
 MyApp.settings = function () {
+    var _detailImage=ko.observable(false);
     var viewModel = {
-        message: 'Welcome! to Settings'
+        detailImage:_detailImage
     };
     return viewModel;
 };
