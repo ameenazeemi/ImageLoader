@@ -42,6 +42,10 @@ local.properties
 *.sln.docstates
 
 # Build results
+ImageLoader.iceproj
+cordova.android.js
+cordova.ios.js
+
 
 [Dd]ebug/
 [Rr]elease/
