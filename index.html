@@ -23,6 +23,8 @@
 
     <!--for  for micro images-->
     <script type="text/javascript" src="js/jquery.microgallery.js"></script>
+    <!-- Load Feather code -->
+    <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
 
 
     <link rel="stylesheet" type="text/css" href="css/dx.common.css" />
@@ -62,6 +64,31 @@
     <script type="text/javascript" src="views/home.js"></script>
     <link rel="dx-template" type="text/html" href="views/home.html"/>
     <link rel="dx-template" type="text/html" href="views/about.html"/>-->
+
+    <script type='text/javascript'>
+        var featherEditor = new Aviary.Feather({
+            apiKey: 'vawtbq475gm3rw8q',
+            apiVersion: 3,
+            theme: 'dark', // Check out our new 'light' and 'dark' themes!
+            tools: 'all',
+            appendTo: 'injection_site',
+            onSave: function (imageID, newURL) {
+                var img = document.getElementById(imageID);
+                img.src = newURL;
+            },
+            onError: function (errorObj) {
+                alert(errorObj.message);
+            }
+        });
+        function launchEditor(id, src) {
+            featherEditor.launch({
+                image: id,
+                url: src
+            });
+            return false;
+        }
+    </script>
+
 </head>
 <body>
     <!--<div class="dx-viewport"></div>-->
@@ -69,10 +96,16 @@
 
     <div data-options="dxView:{name:'home'}">
 
+
+
         <div data-options="dxContent : { targetPlaceholder: 'content' } ">
-            <div data-bind="foreach:galleryData,visible:listImage" class="microGallery">
-                <img style="vertical-align: middle; height: 100px; width: 100px" data-bind="click:$parent.clickAction, attr: { src: String($data) }" />
-            </div>
+
+
+            <!--<div data-bind="if: listImage">-->
+            <!--<div data-bind="foreach:galleryData" class="microGallery">
+                <img style="vertical-align: middle; height: 100px; width: 100px" data-bind="visible:listImage,click:$parent.clickAction, attr: { src: String($data) }" />
+            </div>-->
+            <!--</div>-->
 
 
             <!--<div data-bind="dxList: { dataSource: galleryData }">
@@ -83,14 +116,16 @@
             <!--</div>
             </div>-->
 
-
-            <div data-bind="dxGallery: { dataSource: galleryData,showNavButtons:true,selectedIndex:imageIndex,itemTemplate:'firstView',visible:detailImage }">
+            <!--<div data-bind="if: detailImage">-->
+            <div class="gallery" data-bind="dxGallery: { dataSource: galleryData,showNavButtons:true,selectedIndex:imageIndex,height:'80%',itemTemplate:'firstView' }">
 
                 <div data-options="dxTemplate : { name: 'firstView' } ">
-                    <img style="vertical-align: middle;" data-bind="attr: { src: String($data) }" />
+                    <img style="vertical-align: middle; height: 80%; width: 100%;" data-bind="attr: { src: String($data) }" />
                 </div>
             </div>
 
+
+            <!--</div>-->
         </div>
     </div>
 
@@ -108,10 +143,19 @@
                 <div class="dx-field-label">Show Image In Grid</div>
                 <div class="dx-field-value" data-bind="dxSwitch: { value: detailImage }"></div>
             </div>
-            
+
         </div>
-    </div>
 
+        
+        <div style="height: 60%; width: 100%;">
+            <img id='image1' style="height: 40%; width: 100%;" src='http://images.aviary.com/imagesv5/feather_default.jpg' />
 
+            <!-- Add an edit button, passing the HTML id of the image and the public URL of the image -->
+            <p>
+                <input type='image' src='http://images.aviary.com/images/edit-photo.png' value='Edit photo' onclick="return launchEditor('image1', 'http://images.aviary.com/imagesv5/feather_default.jpg');" />
+            </p>
+
+        </div>
+        <div id='injection_site'  style="height: 60%; width: 100%;"></div>
 </body>
 </html>

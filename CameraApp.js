@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="AppData.js" />
+
 
 function cameraApp() { }
 
@@ -82,6 +83,9 @@ cameraApp = {
         imgDisplay = "data:image/jpeg;base64," + imageData;
 
         cameraApp.imagesArray.push(imgDisplay);
+        
+        MyAppData.ImageSelectedIndex(cameraApp.imagesArray().length);
+        
     },
 
     _onPhotoURISuccess: function (imageURI) {
@@ -92,6 +96,7 @@ cameraApp = {
 
 
             cameraApp.imagesArray.push(imageURI);
+            MyAppData.ImageSelectedIndex(cameraApp.imagesArray().length);
 
             /*
             //_imagesArray.push(imageURI);

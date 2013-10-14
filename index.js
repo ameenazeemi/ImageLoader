@@ -1,4 +1,5 @@
 ﻿/// <reference path="CameraApp.js" />
+/// <reference path="AppData.js" />
 
 "use strict";
 
@@ -7,7 +8,12 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
 
+
     cameraApp.run();
+
+    if (typeof window.localStorage.getItem('detailImage') !== 'undefined' && window.localStorage.getItem('detailImage') != null) {
+         window.localStorage.getItem('detailImage');
+    }
 
     ////applying CSS layout
 
@@ -61,13 +67,21 @@ $(function () {
 
 MyApp.home = function ()
 {
-    debugger;
-    var selectedIndex = ko.observable(0);
+ 
+    var selectedIndex = 0;
+    var detailImage=ko.observable(true);
     var viewModel = {
         viewShown: function () {
             try {
+                debugger;
 
-                selectedIndex = cameraApp.imagesArray().length;
+                selectedIndex = MyAppData.ImageSelectedIndex();
+                detailImage( MyAppData.IsShowDetailImage());
+                //selectedIndex = cameraApp.imagesArray().length;
+                //if (selectedIndex != 0)
+                //{
+                //    this.goToItem(selectedIndex);
+                //}
              /*
                 if (cameraApp.imagesArray().length == 0) {
                     selectedIndex = 0;
@@ -91,9 +105,12 @@ MyApp.home = function ()
         
         galleryData: cameraApp.imagesArray,
         imageIndex: selectedIndex,
-        detailImage: MyApp.settings.detailImage,
-        listImage:!MyApp.settings.detailImage,
-       
+        detailImage: detailImage,
+        listImage: !detailImage,
+        goToItem : function (i) {
+            $(".gallery").dxGallery("instance").goToItem(i, true);
+              //.done(function () { DevExpress.ui.notify("Navigated to " + (i + 1) + " item", "success", 1000); })
+        },       
         
         clickAction: function (data,event)
         {
@@ -169,9 +186,14 @@ MyApp.video = function () {
 };
 
 MyApp.settings = function () {
-    var _detailImage=ko.observable(false);
+    
+    var _isDetailImage = ko.observable(false);
+
+    
+
     var viewModel = {
-        detailImage:_detailImage
+        detailImage:MyAppData.IsShowDetailImage
+
     };
     return viewModel;
 };

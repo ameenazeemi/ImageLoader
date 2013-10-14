@@ -8,3 +8,11 @@
 //    }
 
 //}
+function MyAppData() { }
+
+MyAppData = {
+    IsShowDetailImage: ko.observable(true),
+    ImageSelectedIndex : ko.observable(0)
+}
+
+
